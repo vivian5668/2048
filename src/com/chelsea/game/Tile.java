@@ -22,7 +22,7 @@ public class Tile {
         this.value = value;
         this.x = x;
         this.y = y;
-        BufferedImage titleImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        tileImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
         drawImage();
     }
 
@@ -86,5 +86,19 @@ public class Tile {
         int drawY = HEIGHT / 2 + DrawUtils.getMessageHeight("" + value, font, g) / 2; // use + b/c java draws letters from bottom left instead of top left
         g.drawString("" + value, drawX, drawY);
         g.dispose();
+
+    }
+
+    // for animations
+    public void update() {
+
+    }
+
+    public void render(Graphics2D g) {
+        g.drawImage(tileImage, x, y, null);
+    }
+
+    public int getValue() {
+        return value;
     }
 }
