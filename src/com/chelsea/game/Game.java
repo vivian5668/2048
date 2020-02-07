@@ -20,13 +20,18 @@ public class Game extends JPanel implements KeyListener, Runnable {
     private long elapsed;
     private boolean set;
 
+    private GameBoard board;
+
     public Game() {
         setFocusable(true); // allow input
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         addKeyListener(this);
+
+        board = new GameBoard(WIDTH / 2 - GameBoard.BOARD_WIDTH / 2, HEIGHT - GameBoard.BOARD_HEIGHT - 10);
     }
 
     private void update() {
+        board.update();
 //        System.out.println("i am here");
         if (Keyboard.pressed[KeyEvent.VK_SPACE]) {
             System.out.println("hit space1");
@@ -42,6 +47,7 @@ public class Game extends JPanel implements KeyListener, Runnable {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, WIDTH, HEIGHT);
         //render board
+        board.render(g);
         g.dispose();
 
         Graphics2D g2d = (Graphics2D) getGraphics();
