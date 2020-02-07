@@ -27,7 +27,14 @@ public class Game extends JPanel implements KeyListener, Runnable {
     }
 
     private void update() {
-
+//        System.out.println("i am here");
+        if (Keyboard.pressed[KeyEvent.VK_SPACE]) {
+            System.out.println("hit space1");
+        }
+        if (Keyboard.pressed[KeyEvent.VK_RIGHT]) {
+            System.out.println("hit space2");
+        }
+        Keyboard.update();
     }
 
     private void render() {
@@ -49,12 +56,13 @@ public class Game extends JPanel implements KeyListener, Runnable {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        Keyboard.keyPressed(e);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        Keyboard.keyReleased(e);
+//        System.out.println("hit space1 released");
     }
 
     @Override
@@ -93,17 +101,15 @@ public class Game extends JPanel implements KeyListener, Runnable {
                     e.printStackTrace();
                 }
             }
-        }
 
-
-
-        //EPS timer
-        if (System.currentTimeMillis() - fpsTimer > 1000) {
-            System.out.printf("%d fps %d updates", fps, updates);
-            System.out.println();
-            fps = 0;
-            updates = 0;
-            fpsTimer += 1000;
+            //EPS timer
+            if (System.currentTimeMillis() - fpsTimer > 1000) {
+//                System.out.printf("%d fps %d updates", fps, updates);
+                System.out.println();
+                fps = 0;
+                updates = 0;
+                fpsTimer += 1000;
+            }
         }
     }
 
@@ -111,6 +117,7 @@ public class Game extends JPanel implements KeyListener, Runnable {
         if (running) return;
         running = true;
         game = new Thread(this, "game");
+        game.start();
     }
 
     public synchronized void stop() {

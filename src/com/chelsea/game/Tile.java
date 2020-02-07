@@ -82,5 +82,9 @@ public class Tile {
 
         g.setFont(font);
 
+        int drawX = WIDTH / 2 - DrawUtils.getMessageWidth("" + value, font, g) / 2;
+        int drawY = HEIGHT / 2 + DrawUtils.getMessageHeight("" + value, font, g) / 2; // use + b/c java draws letters from bottom left instead of top left
+        g.drawString("" + value, drawX, drawY);
+        g.dispose();
     }
 }
