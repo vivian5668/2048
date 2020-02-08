@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.nio.Buffer;
+import java.util.Arrays;
 import java.util.Random;
 
 public class GameBoard {
@@ -118,6 +119,7 @@ public class GameBoard {
                 if (current == null) continue;
                 current.update();
                 // reset position
+                resetPosition(current, row, col);
                 if (current.getValue() == 2048) {
                     won = true;
                 }
@@ -125,6 +127,41 @@ public class GameBoard {
         }
 
     }
+
+    private void resetPosition(Tile current, int row, int col) {
+        if (current == null) return;
+
+        int x = getTileX(col);
+        int y = getTileY(row);
+
+        int distX = current.getX() - x;
+        int distY = current.getY() - y;
+
+        if (Math.abs(distX) < Tile.SLIDE_SPEED) {
+            current.setX(current.getX() - distX);
+        }
+
+        if (Math.abs(distY) < Tile.SLIDE_SPEED) {
+            current.setY(current.getY() - distY);
+        }
+
+        if (distX < 0) {
+            current.setX(current.getX() + Tile.SLIDE_SPEED);
+        }
+
+        if (distY < 0) {
+            current.setY(current.getY() + Tile.SLIDE_SPEED);
+        }
+
+        if (distX > 0) {
+            current.setX(current.getX() - Tile.SLIDE_SPEED);
+        }
+
+        if (distY > 0) {
+            current.setY(current.getY() - Tile.SLIDE_SPEED);
+        }
+    }
+
 
     private boolean move(int row, int col, int horizontalDirection, int verticalDirection, Direction dir) {
         boolean canMove = false;
@@ -139,11 +176,19 @@ public class GameBoard {
         while (move) { // while the tile is able to combine or slide to an empty space, and hasn't reached walls, keep checking
             newCol += horizontalDirection;
             newRow += verticalDirection;
-            if (checkOurOfBounds(dir, newRow, newCol)) break;;
+            System.out.println(newRow + " " + newCol);
+            System.out.println(Arrays.toString(board));
+            if (checkOurOfBounds(dir, newRow, newCol)) break;
+            System.out.println(newRow + " " + newCol);
+            System.out.println("board length" + " " + board.length + " " + board[0].length);
+
+
             if (board[newRow][newCol] == null) {
                 board[newRow][newCol] = current;
+                canMove = true;
                 board[newRow - verticalDirection][newCol - horizontalDirection] = null;
                 board[newRow][newCol].setSlideTo(new Point(newRow, newCol));
+
             } else if (board[newRow][newCol].getValue() == current.getValue() && board[newRow][newCol].canCombine()) {
                 board[newRow][newCol].setCanCombine(false);
                 board[newRow][newCol].setValue(board[newRow][newCol].getValue() * 2);
@@ -160,16 +205,7 @@ public class GameBoard {
     }
 
     private boolean checkOurOfBounds(Direction dir, int row, int col) {
-        if (dir == Direction.LEFT) {
-            return col < 0;
-        } else if (dir == Direction.RIGHT) {
-            return col > COLS - 1;
-        } else if (dir == Direction.UP) {
-            return row < 0;
-        } else if (dir == Direction.DOWN) {
-            return row > ROWS - 1;
-        }
-        return false;
+        return col < 0 || col > COLS - 1 || row < 0 || row > ROWS - 1;
     }
 
     private void moveTiles(Direction dir) {
@@ -257,6 +293,8 @@ public class GameBoard {
                 }
             }
         }
+        dead = true;
+        //setHighScore;
     }
 
     private boolean checkSurroundingTiles(int row, int col, Tile current) {
@@ -265,17 +303,17 @@ public class GameBoard {
             if (check == null) return true;
             if (current.getValue() == check.getValue()) return true;
         }
-        else if (row < ROWS - 1) {
+        if (row < ROWS - 1) {
             Tile check = board[row + 1][col];
             if (check == null) return true;
             if (current.getValue() == check.getValue()) return true;
         }
-        else if (col > 0) {
+        if (col > 0) {
             Tile check = board[row][col - 1];
             if (check == null) return true;
             if (current.getValue() == check.getValue()) return true;
         }
-        else if (col < COLS - 1) {
+        if (col < COLS - 1) {
             Tile check = board[row][col + 1];
             if (check == null) return true;
             if (current.getValue() == check.getValue()) return true;

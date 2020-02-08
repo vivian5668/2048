@@ -14,12 +14,14 @@ public class Tile {
     private BufferedImage tileImage;
     private Color background;
     private Color text;
+
+
     private Font font;
     private Point slideTo;
     private int x;
     private int y;
 
-    private boolean canCombine;
+    private boolean canCombine = true;
 
     public Tile (int value, int x, int y) {
         this.value = value;
@@ -125,4 +127,21 @@ public class Tile {
     public void setSlideTo(Point p) {
         this.slideTo = p;
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
 }
