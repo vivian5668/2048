@@ -253,7 +253,7 @@ public class GameBoard {
         }
 
         else if (dir == Direction.DOWN) {
-            horizontalDirection = 1;
+            verticalDirection = 1;
             for (int row = ROWS - 1; row >= 0; row--) {
                 for (int col = 0; col < COLS; col++) {
                     if (!canMove) {
