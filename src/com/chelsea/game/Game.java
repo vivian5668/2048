@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 public class Game extends JPanel implements KeyListener, Runnable {
 
 //    private static final long serialVersionUID = 1L;
-    public static final int WIDTH = 400;
+    public static final int WIDTH = 600;
     public static final int HEIGHT = 630;
     public static final Font main = new Font("Bebas Neue Regular", Font.PLAIN, 28);
     private Thread game;

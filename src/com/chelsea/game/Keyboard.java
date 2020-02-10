@@ -20,7 +20,6 @@ public class Keyboard {
 
     public static void keyPressed(KeyEvent e) {
         pressed[e.getKeyCode()] = true;
-        System.out.println("hit space pressed");
 
     }
 

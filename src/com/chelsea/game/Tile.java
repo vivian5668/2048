@@ -110,6 +110,7 @@ public class Tile {
 
     public void setValue(int value) {
         this.value = value;
+        drawImage();
     }
 
     public boolean canCombine() {

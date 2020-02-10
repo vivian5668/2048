@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class GameBoard {
-    public static final int ROWS = 4;
-    public static final int COLS = 4;
+    public static final int ROWS = 6;
+    public static final int COLS = 6;
 
     private final int startingTiles = 2;
     private Tile[][] board;
@@ -74,10 +74,9 @@ public class GameBoard {
             Tile current = board[row][col];
             if (current == null) {
                 int value = random.nextInt(10) < 9? 2 : 4; // 10 % chance for getting a randfom 4 to show up
-                System.out.println(value + " " +  getTileX(col) + " "  + getTileY(row));
+//                System.out.println(value + " " +  getTileX(col) + " "  + getTileY(row));
                 Tile tile = new Tile(value, getTileX(col), getTileY(row));
 
-                System.out.println("i am here");
                 board[row][col] = tile;
                 notValid = false;
             }
@@ -176,12 +175,11 @@ public class GameBoard {
         while (move) { // while the tile is able to combine or slide to an empty space, and hasn't reached walls, keep checking
             newCol += horizontalDirection;
             newRow += verticalDirection;
-            System.out.println(newRow + " " + newCol);
-            System.out.println(Arrays.toString(board));
+//            System.out.println(newRow + " " + newCol);
             if (checkOurOfBounds(dir, newRow, newCol)) break;
-            System.out.println(newRow + " " + newCol);
-            System.out.println("board length" + " " + board.length + " " + board[0].length);
-
+//            System.out.println(newRow + " " + newCol);
+//            System.out.println("board length" + " " + board.length + " " + board[0].length);
+//
 
             if (board[newRow][newCol] == null) {
                 board[newRow][newCol] = current;
@@ -190,6 +188,7 @@ public class GameBoard {
                 board[newRow][newCol].setSlideTo(new Point(newRow, newCol));
 
             } else if (board[newRow][newCol].getValue() == current.getValue() && board[newRow][newCol].canCombine()) {
+                System.out.println(current.getValue());
                 board[newRow][newCol].setCanCombine(false);
                 board[newRow][newCol].setValue(board[newRow][newCol].getValue() * 2);
                 canMove = true;
